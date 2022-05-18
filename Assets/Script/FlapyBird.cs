@@ -8,9 +8,20 @@ public class FlapyBird : MonoBehaviour
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private float m_speed;
 
+    private Vector3 pos;
+
+    public void MyReset()
+    {
+        transform.position = pos;
+        _rb.velocity = transform.right * m_speed;
+    }
+    private void OnEnable()
+    {
+        _rb.velocity = transform.right * m_speed;
+    }
     private void Start()
     {
-        _rb = GetComponent<Rigidbody>();
+        pos = transform.position;
         _rb.velocity = transform.right * m_speed;
     }
     private void Update()
