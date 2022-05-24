@@ -7,9 +7,14 @@ public class FlapyBird : MonoBehaviour
     [SerializeField] private float m_jump_force;
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private float m_speed;
+    [SerializeField] private System.Action OnTouchWall;
 
     private Vector3 pos;
 
+    public void Init(System.Action OnTouchWall)
+    {
+        this.OnTouchWall = OnTouchWall;
+    }
     public void MyReset()
     {
         transform.position = pos;
@@ -40,7 +45,6 @@ public class FlapyBird : MonoBehaviour
         print("trigerEnter");
         Vector3 save = _rb.velocity;
         _rb.velocity = new Vector3(-save.x, save.y, -save.z);
-        //_rb.velocity = transform.right * m_speed *-1;
-        //_rb.velocity = _rb.velocity - transform.right * m_speed;
+        OnTouchWall?.Invoke();
     }
 }
