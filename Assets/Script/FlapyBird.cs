@@ -10,6 +10,7 @@ public class FlapyBird : MonoBehaviour
     [SerializeField] private bool m_isDeath = false;
 
     [SerializeField] private System.Action OnTouchWall;
+    [SerializeField] private System.Action<Vector3> OnTouchWallV3;
     [SerializeField] private System.Action OnTouchSpike;
 
     [SerializeField] private LayerMask wallLayer = 0;
@@ -17,10 +18,11 @@ public class FlapyBird : MonoBehaviour
 
     private Vector3 pos;
 
-    public void Init(ref System.Action OnTouchWall,ref System.Action OnTouchSpike)
+    public void Init(ref System.Action OnTouchWall,ref System.Action OnTouchSpike, System.Action<Vector3> OnTouchWallV3)
     {
         this.OnTouchWall = OnTouchWall;
         this.OnTouchSpike = OnTouchSpike;
+        this.OnTouchWallV3 = OnTouchWallV3;
     }
     public void MyReset()
     {
@@ -59,6 +61,7 @@ public class FlapyBird : MonoBehaviour
         {
             _rb.velocity = new Vector3(-save.x, save.y, -save.z);
             OnTouchWall?.Invoke();
+            OnTouchWallV3?.Invoke(transform.position);
         }
         if ((spikeLayer.value & (1 << other.gameObject.layer)) > 0)
         {
