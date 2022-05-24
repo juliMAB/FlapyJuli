@@ -8,11 +8,13 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField] private FlapyBird fb = null;
     [SerializeField] private UIManager uiManager = null;
+    [SerializeField] private SpikesManager spikesManager = null;
 
     [SerializeField] private System.Action OnTouchWall;
     [SerializeField] private System.Action<int> OnScoreChange;
     private void Start()
     {
+        spikesManager.Init(ref OnTouchWall);
         OnTouchWall += Added1Score;
         fb.Init(OnTouchWall);
         uiManager.Init(ref OnScoreChange);
