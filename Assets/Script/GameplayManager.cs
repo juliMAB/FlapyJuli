@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameplayManager : MonoBehaviour
 {
     [SerializeField] private int score = 0;
-    [SerializeField] private int money = 0;
+    [SerializeField] private static int money = 0;
 
     [SerializeField] private FlapyBird fb = null;
     [SerializeField] private UIManager uiManager = null;
@@ -20,6 +20,9 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private System.Action<int> OnMoneyChange;
 
     private Vector3 pjPos;
+
+    public static int Money { get => money; set => money = value; }
+
     private void Start()
     {
         spikesManager.Init(ref OnTouchWall);
@@ -28,6 +31,7 @@ public class GameplayManager : MonoBehaviour
         OnTouchWall += Added1Score;
         uiManager.Init(ref OnScoreChange,ref OnpjDie,ref OnMoneyChange);
         fb.Init(ref OnTouchWall,ref OnpjDie, UpdatePjPos);
+        LoadCurrency();
     }
     void UpdatePjPos(Vector3 pos)
     {
@@ -50,5 +54,25 @@ public class GameplayManager : MonoBehaviour
         print("pj touch coint");
         money++;
         OnMoneyChange?.Invoke(money);
+        SaveCurrency();
+    }
+
+    public void SaveCurrency()
+    {
+        SaveSystem.SaveCurrency();
+    }
+
+    public void LoadCurrency()
+    {
+        PlayerData data = SaveSystem.LoadCurrency();
+        if(data==null)
+            return;
+        money = data.Currency;
+        OnMoneyChange?.Invoke(money);
+    }
+    public void DeleteCurrency()
+    {
+        money = 0;
+        SaveCurrency();
     }
 }
