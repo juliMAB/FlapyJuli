@@ -11,18 +11,24 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private SpikesManager spikesManager = null;
 
     [SerializeField] private System.Action OnTouchWall;
+    [SerializeField] private System.Action OnpjDie;
     [SerializeField] private System.Action<int> OnScoreChange;
     private void Start()
     {
         spikesManager.Init(ref OnTouchWall);
         OnTouchWall += Added1Score;
-        fb.Init(OnTouchWall);
-        uiManager.Init(ref OnScoreChange);
+        uiManager.Init(ref OnScoreChange,ref OnpjDie);
+        fb.Init(ref OnTouchWall,ref OnpjDie);
     }
 
     void Added1Score()
     {
         score++;
         OnScoreChange?.Invoke(score);
+    }
+
+    public void ResetScore()
+    {
+        score = 0;
     }
 }

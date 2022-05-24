@@ -12,11 +12,16 @@ public class SpikesManager : MonoBehaviour
     }
     [SerializeField] private GameObject[] rightSpikes;
     [SerializeField] private GameObject[] leftSpikes;
+    [SerializeField] private Collider[] rightSpikesCollider;
+    [SerializeField] private Collider[] leftSpikesCollider;
     [SerializeField] private GameObject rightParent;
     [SerializeField] private GameObject leftParent;
     [SerializeField] private SIDE side = SIDE.RIGHT;
     [SerializeField] private bool activeAnim = false;
     [SerializeField] private float animationTime = 1.0f;
+
+    private Vector3 posRightParentStart;
+    private Vector3 posLeftParentStart;
 
 
     public void Init(ref System.Action OnTouchWall)
@@ -24,7 +29,34 @@ public class SpikesManager : MonoBehaviour
         OnTouchWall += ActiveSpikes;
         
     }
+    private void Start()
+    {
+        posRightParentStart = rightParent.transform.position;
+        posLeftParentStart = leftParent.transform.position;
+        for (int i = 0; i < rightSpikes.Length; i++)
+        {
+            rightSpikes[i].SetActive(true);
+            leftSpikes[i].SetActive(true);
 
+            rightSpikesCollider[i] = rightSpikes[i].GetComponent<Collider>();
+            leftSpikesCollider[i] =  leftSpikes[i].GetComponent<Collider>();
+
+            rightSpikes[i].SetActive(false);
+            leftSpikes[i].SetActive(false);
+        }
+    }
+    public void MyReset()
+    {
+        StopAllCoroutines();
+        rightParent.transform.position = posRightParentStart;
+        leftParent.transform.position = posLeftParentStart;
+        for (int i = 0; i < rightSpikes.Length; i++)
+        {
+            rightSpikes[i].SetActive(false);
+        }
+        side = SIDE.LEFT;
+        DisableColliderSpikes();
+    }
 
     private void ActiveSpikes()
     {
@@ -36,6 +68,7 @@ public class SpikesManager : MonoBehaviour
         {
             StartCoroutine(Anim(leftParent, leftParent.transform.position + Vector3.right*2, animationTime));
         }
+        DisableColliderSpikes();
         ActiveRandomSpikes();
         DisableCurrentSpikes();
         
@@ -53,7 +86,25 @@ public class SpikesManager : MonoBehaviour
             side = SIDE.RIGHT;
         }
     }
-
+    void DisableColliderSpikes()
+    {
+        if (side == SIDE.RIGHT)
+        {
+            for (int i = 0; i < leftSpikesCollider.Length; i++)
+            {
+                leftSpikesCollider[i].enabled = false;
+                rightSpikesCollider[i].enabled = true;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < rightSpikesCollider.Length; i++)
+            {
+                leftSpikesCollider[i].enabled = true;
+                rightSpikesCollider[i].enabled = false;
+            }
+        }
+    }
     void ActiveRandomSpikes()
     {
         if (rightSpikes.Length == 0 || leftSpikes.Length == 0)
