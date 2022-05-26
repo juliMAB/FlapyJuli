@@ -893,7 +893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894c7ef89d547c846bd2dc95e3ee70b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_jump_force: 150
+  m_jump_force: 300
   _rb: {fileID: 465668368}
   m_speed: 6
   m_isDeath: 0
@@ -2612,7 +2612,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
-  money: 0
   fb: {fileID: 465668367}
   uiManager: {fileID: 1229503018}
   spikesManager: {fileID: 1112089496}
