@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private TMPro.TextMeshProUGUI m_TextMeshPro_Score;
     [SerializeField] private TMPro.TextMeshProUGUI m_TextMeshPro_Currency;
     [SerializeField] private GameObject m_endText;
+    [SerializeField] private UnityEvent OnEnd;
     public void Init(ref System.Action<int> OnScoreChange,ref System.Action OnPlayerDie, ref System.Action<int> OnCurrencyChange)
     {
         OnScoreChange += UpdateScore;
@@ -21,6 +23,7 @@ public class UIManager : MonoBehaviour
     private void UpdateEndText()
     {
         m_endText.SetActive(true);
+        OnEnd?.Invoke();
     }
     private void UpdateCurrency(int currency)
     {
