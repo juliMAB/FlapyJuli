@@ -77,6 +77,8 @@ public class FlapyBird : MonoBehaviour
         if ((spikeLayer.value & (1 << other.gameObject.layer)) > 0)
         {
             print("spikeTouch");
+            _rb.velocity = new Vector3(-save.x, save.y, -save.z);
+            _rb.AddTorque(95,ForceMode2D.Impulse);
             //aminStart;
             OnTouchSpike?.Invoke();
             m_isDeath = true;
