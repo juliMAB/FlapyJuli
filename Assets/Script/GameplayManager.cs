@@ -45,7 +45,7 @@ public class GameplayManager : MonoBehaviour
             spawnCurrency.SpawnCoint(pjPos);
     }
 
-    public void ResetScore()
+    private void ResetScore()
     {
         score = 0;
     }
@@ -74,5 +74,13 @@ public class GameplayManager : MonoBehaviour
     {
         money = 0;
         SaveCurrency();
+    }
+    public void MyReset()
+    {
+        fb.MyReset();
+        coint.MyReset();
+        spikesManager.MyReset();
+        ResetScore();
+        uiManager.MyReset();
     }
 }

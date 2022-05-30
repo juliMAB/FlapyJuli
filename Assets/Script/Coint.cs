@@ -20,4 +20,8 @@ public class Coint : MonoBehaviour
             transform.gameObject.SetActive(false);
         }
     }
+    public void MyReset()
+    {
+        gameObject.SetActive(false);
+    }
 }

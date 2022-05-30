@@ -32,6 +32,7 @@ public class FlapyBird : MonoBehaviour
         transform.rotation = Quaternion.identity;
         _rb.velocity = transform.right * m_speed;
         _rb.angularVelocity = 0f;
+        _rb.constraints = RigidbodyConstraints2D.None;
         m_isDeath = false;
     }
     private void OnEnable()
