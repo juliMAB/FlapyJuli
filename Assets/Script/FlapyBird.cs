@@ -18,6 +18,8 @@ public class FlapyBird : MonoBehaviour
 
     private Vector3 pos;
 
+    private Animator animator;
+
     public void Init(ref System.Action OnTouchWall,ref System.Action OnTouchSpike, System.Action<Vector3> OnTouchWallV3)
     {
         this.OnTouchWall = OnTouchWall;
@@ -39,6 +41,7 @@ public class FlapyBird : MonoBehaviour
     private void Start()
     {
         pos = transform.position;
+        animator = GetComponent<Animator>();
         _rb.velocity = transform.right * m_speed;
     }
     private void Update()
@@ -50,6 +53,7 @@ public class FlapyBird : MonoBehaviour
             print("OnClick");
             _rb.velocity = new Vector3(_rb.velocity.x, 0f, 0f);
             _rb.AddForce( Vector3.up*m_jump_force);
+            animator.SetTrigger("Jump");
         }
         Quaternion q = Quaternion.AngleAxis(_rb.velocity.y, transform.forward);
         Vector3 v = transform.eulerAngles;
