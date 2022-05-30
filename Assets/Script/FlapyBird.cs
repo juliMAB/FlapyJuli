@@ -51,7 +51,9 @@ public class FlapyBird : MonoBehaviour
             _rb.velocity = new Vector3(_rb.velocity.x, 0f, 0f);
             _rb.AddForce( Vector3.up*m_jump_force);
         }
-        transform.rotation = Quaternion.AngleAxis(_rb.velocity.y,transform.forward);
+        Quaternion q = Quaternion.AngleAxis(_rb.velocity.y, transform.forward);
+        Vector3 v = transform.eulerAngles;
+        transform.eulerAngles = new Vector3(v.x, v.y, q.eulerAngles.z);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
