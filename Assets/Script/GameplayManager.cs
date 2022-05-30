@@ -6,6 +6,8 @@ public class GameplayManager : MonoBehaviour
 {
     [SerializeField] private int score = 0;
     [SerializeField] private static int money = 0;
+    [SerializeField] private static int gamesPlayed = 0;
+    [SerializeField] private static int maxScore = 0;
 
     [SerializeField] private FlapyBird fb = null;
     [SerializeField] private UIManager uiManager = null;
@@ -18,10 +20,14 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private System.Action OnpjDie;
     [SerializeField] private System.Action<int> OnScoreChange;
     [SerializeField] private System.Action<int> OnMoneyChange;
+    [SerializeField] private System.Action<int> OnMaxScoreChange;
+    [SerializeField] private System.Action<int> OnGamePlayedChange;
 
     private Vector3 pjPos;
 
     public static int Money { get => money; set => money = value; }
+    public static int GamesPlayed { get => gamesPlayed; set => gamesPlayed = value; }
+    public static int MaxScore { get => maxScore; set => maxScore = value; }
 
     private void Start()
     {
@@ -29,13 +35,29 @@ public class GameplayManager : MonoBehaviour
         OnTouchCoint += Added1Money;
         coint.Init(ref OnTouchCoint);
         OnTouchWall += Added1Score;
-        uiManager.Init(ref OnScoreChange,ref OnpjDie,ref OnMoneyChange);
+        OnpjDie += Added1Game;
+        OnpjDie += UpdateMaxScore;
+        uiManager.Init(ref OnScoreChange,ref OnpjDie,ref OnMoneyChange, ref OnMaxScoreChange,ref OnGamePlayedChange);
         fb.Init(ref OnTouchWall,ref OnpjDie, UpdatePjPos);
         LoadCurrency();
     }
     void UpdatePjPos(Vector3 pos)
     {
         pjPos = pos;
+    }
+    void UpdateMaxScore()
+    {
+        if (score>maxScore)
+        {
+            maxScore = score;
+            OnMaxScoreChange?.Invoke(maxScore);
+        }
+    }
+    void Added1Game()
+    {
+        gamesPlayed++;
+        OnGamePlayedChange?.Invoke(gamesPlayed);
+        SaveCurrency();
     }
     void Added1Score()
     {
@@ -57,23 +79,30 @@ public class GameplayManager : MonoBehaviour
         SaveCurrency();
     }
 
-    public void SaveCurrency()
+    private void SaveCurrency()
     {
-        SaveSystem.SaveCurrency();
+        SaveSystem.SaveData();
     }
 
-    public void LoadCurrency()
+    private void LoadCurrency()
     {
-        PlayerData data = SaveSystem.LoadCurrency();
+        PlayerData data = SaveSystem.LoadData();
         if(data==null)
             return;
         money = data.Currency;
+        gamesPlayed = data.GamesPlayed;
+        maxScore = data.MaxScore;
         OnMoneyChange?.Invoke(money);
+        OnMaxScoreChange?.Invoke(maxScore);
+        OnGamePlayedChange?.Invoke(gamesPlayed);
     }
-    public void DeleteCurrency()
+    public void DeleteData()
     {
         money = 0;
-        SaveCurrency();
+        gamesPlayed = 0;
+        maxScore = 0;
+
+        SaveSystem.SaveData();
     }
     public void MyReset()
     {
