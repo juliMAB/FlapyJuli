@@ -37,6 +37,7 @@ public class GameplayManager : MonoBehaviour
         OnTouchWall += Added1Score;
         OnpjDie += Added1Game;
         OnpjDie += UpdateMaxScore;
+        OnpjDie += DisableBird;
         uiManager.Init(ref OnScoreChange,ref OnpjDie,ref OnMoneyChange, ref OnMaxScoreChange,ref OnGamePlayedChange);
         fb.Init(ref OnTouchWall,ref OnpjDie, UpdatePjPos);
         LoadCurrency();
@@ -78,7 +79,10 @@ public class GameplayManager : MonoBehaviour
         OnMoneyChange?.Invoke(money);
         SaveCurrency();
     }
-
+    private void DisableBird()
+    {
+        fb.enabled = false;
+    }
     private void SaveCurrency()
     {
         SaveSystem.SaveData();
@@ -106,6 +110,7 @@ public class GameplayManager : MonoBehaviour
     }
     public void MyReset()
     {
+        fb.enabled = true;
         fb.MyReset();
         coint.MyReset();
         spikesManager.MyReset();

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FlapyBird : MonoBehaviour
 {
+    [SerializeField] private GameObject visual;
     [SerializeField] private float m_jump_force;
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private float m_speed;
@@ -34,6 +35,7 @@ public class FlapyBird : MonoBehaviour
         _rb.angularVelocity = 0f;
         _rb.constraints = RigidbodyConstraints2D.None;
         m_isDeath = false;
+        visual.transform.eulerAngles = new Vector3(0, 0, 0);
     }
     private void OnEnable()
     {
@@ -57,8 +59,8 @@ public class FlapyBird : MonoBehaviour
             animator.SetTrigger("Jump");
         }
         Quaternion q = Quaternion.AngleAxis(_rb.velocity.y, transform.forward);
-        Vector3 v = transform.eulerAngles;
-        transform.eulerAngles = new Vector3(v.x, v.y, q.eulerAngles.z);
+        Vector3 v = visual.transform.eulerAngles;
+        visual.transform.eulerAngles = new Vector3(v.x, v.y, q.eulerAngles.z);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -67,9 +69,9 @@ public class FlapyBird : MonoBehaviour
         if ((wallLayer.value & (1 << other.gameObject.layer)) > 0)
         {
             if (_rb.velocity.x > 0)
-                transform.eulerAngles = new Vector3(0, 180, 0);
+                visual.transform.eulerAngles = new Vector3(0, 180, 0);
             else
-                transform.eulerAngles = new Vector3(0, 0, 0);
+                visual.transform.eulerAngles = new Vector3(0, 0, 0);
             _rb.velocity = new Vector3(-save.x, save.y, -save.z);
             OnTouchWall?.Invoke();
             OnTouchWallV3?.Invoke(transform.position);
