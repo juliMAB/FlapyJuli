@@ -64,6 +64,8 @@ public class FlapyBird : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (m_isDeath)
+            return ;
         print("OnTriggerEnter");
         Vector3 save = _rb.velocity;
         if ((wallLayer.value & (1 << other.gameObject.layer)) > 0)
