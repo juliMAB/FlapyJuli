@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f3a4b957c754a9342aaf8b04fd0b83fe
+guid: 27fb6b6aa7a636646a5d144b05558e65
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 10
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -104,76 +104,55 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 16-bit-spike-Sheet_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2350542211226a840965b4486466e8f8
-      internalID: -1018489531
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 16-bit-spike-Sheet_1
+      name: Pajarraco
       rect:
         serializedVersion: 2
         x: 16
-        y: 0
-        width: 16
-        height: 16
+        y: 3
+        width: 142
+        height: 142
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75b34ff5e172a4f4085d9ca7dc34a0dc
-      internalID: 873680112
+      spriteID: 23c1d4516683d324b9ba105247279984
+      internalID: -1399927089
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 16-bit-spike-Sheet_2
+      name: Ala
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 16
+        x: 286
+        y: 52
+        width: 79
+        height: 51
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c85e3f396f072bd40bcc538dc374dc61
-      internalID: -1489512426
+      spriteID: 70d7c439468b5d5439cf818ce1c73894
+      internalID: 1912310590
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 16-bit-spike-Sheet_3
+      name: Pico
       rect:
         serializedVersion: 2
-        x: 48
-        y: 0
-        width: 16
-        height: 16
+        x: 158
+        y: 53
+        width: 55
+        height: 57
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -181,8 +160,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e7c26f6992b90045a9807ad3f74845e
-      internalID: 943671279
+      spriteID: b13ba40d83857f84db4108d0d6ffc2ad
+      internalID: -367677789
       vertices: []
       indices: 
       edges: []
@@ -198,10 +177,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      16-bit-spike-Sheet_1: 873680112
-      16-bit-spike-Sheet_3: 943671279
-      16-bit-spike-Sheet_2: -1489512426
-      16-bit-spike-Sheet_0: -1018489531
+      Pico: -1143209631
+      Pajarraco: -1399927089
+      Ala: 1912310590
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

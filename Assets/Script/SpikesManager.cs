@@ -12,8 +12,8 @@ public class SpikesManager : MonoBehaviour
     }
     [SerializeField] private GameObject[] rightSpikes;
     [SerializeField] private GameObject[] leftSpikes;
-    [SerializeField] private Collider[] rightSpikesCollider;
-    [SerializeField] private Collider[] leftSpikesCollider;
+    [SerializeField] private Collider2D[] rightSpikesCollider;
+    [SerializeField] private Collider2D[] leftSpikesCollider;
     [SerializeField] private GameObject rightParent;
     [SerializeField] private GameObject leftParent;
     [SerializeField] private SIDE side = SIDE.RIGHT;
@@ -38,8 +38,8 @@ public class SpikesManager : MonoBehaviour
             rightSpikes[i].SetActive(true);
             leftSpikes[i].SetActive(true);
 
-            rightSpikesCollider[i] = rightSpikes[i].GetComponent<Collider>();
-            leftSpikesCollider[i] =  leftSpikes[i].GetComponent<Collider>();
+            rightSpikesCollider[i] = rightSpikes[i].GetComponent<Collider2D>();
+            leftSpikesCollider[i] =  leftSpikes[i].GetComponent<Collider2D>();
 
             rightSpikes[i].SetActive(false);
             leftSpikes[i].SetActive(false);

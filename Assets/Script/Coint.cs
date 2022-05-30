@@ -12,7 +12,7 @@ public class Coint : MonoBehaviour
     {
         this.OnCoinTouch = OnCointTouch;
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if ((playerLayer.value & (1 << other.gameObject.layer)) > 0)
         {

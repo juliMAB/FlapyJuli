@@ -5,7 +5,7 @@ using UnityEngine;
 public class FlapyBird : MonoBehaviour
 {
     [SerializeField] private float m_jump_force;
-    [SerializeField] private Rigidbody _rb;
+    [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private float m_speed;
     [SerializeField] private bool m_isDeath = false;
 
@@ -29,7 +29,7 @@ public class FlapyBird : MonoBehaviour
         transform.position = pos;
         transform.rotation = Quaternion.identity;
         _rb.velocity = transform.right * m_speed;
-        _rb.angularVelocity = Vector3.zero;
+        _rb.angularVelocity = 0f;
         m_isDeath = false;
     }
     private void OnEnable()
@@ -48,17 +48,21 @@ public class FlapyBird : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             print("OnClick");
-            _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
+            _rb.velocity = new Vector3(_rb.velocity.x, 0f, 0f);
             _rb.AddForce( Vector3.up*m_jump_force);
         }
+        transform.rotation = Quaternion.AngleAxis(_rb.velocity.y,transform.forward);
     }
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        print("OnTriggerEnter");
         Vector3 save = _rb.velocity;
         if ((wallLayer.value & (1 << other.gameObject.layer)) > 0)
         {
+            if (_rb.velocity.x > 0)
+                transform.eulerAngles = new Vector3(0, 180, 0);
+            else
+                transform.eulerAngles = new Vector3(0, 0, 0);
             _rb.velocity = new Vector3(-save.x, save.y, -save.z);
             OnTouchWall?.Invoke();
             OnTouchWallV3?.Invoke(transform.position);
@@ -66,12 +70,7 @@ public class FlapyBird : MonoBehaviour
         if ((spikeLayer.value & (1 << other.gameObject.layer)) > 0)
         {
             print("spikeTouch");
-            Vector3 expPos = transform.position + Vector3.forward - Vector3.up;
-            if (save.x > 0)
-                expPos += Vector3.right;
-            else
-                expPos -= Vector3.right;
-            _rb.AddExplosionForce(1000, expPos,100);
+            //aminStart;
             OnTouchSpike?.Invoke();
             m_isDeath = true;
         }
