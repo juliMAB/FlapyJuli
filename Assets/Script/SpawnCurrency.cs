@@ -20,6 +20,7 @@ public class SpawnCurrency : MonoBehaviour
                 maxDist = Vector3.Distance(playerPos, spawnPoints[i].transform.position);
             }
         }
+        //Debug.Break();
         cointPrifab.SetActive(true);
         cointPrifab.transform.position = largePos.transform.position;
     }

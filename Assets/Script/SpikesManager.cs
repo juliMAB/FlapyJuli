@@ -10,6 +10,16 @@ public class SpikesManager : MonoBehaviour
         RIGHT,
         LEFT
     }
+    [SerializeField] 
+    private enum DIFICULTY
+    {
+        NONE,
+        EASY,
+        MEDIUM,
+        HARD,
+        IMPOSIBLE,
+        ALLSPIKES
+    }
     [SerializeField] private GameObject[] rightSpikes;
     [SerializeField] private GameObject[] leftSpikes;
     [SerializeField] private Collider2D[] rightSpikesCollider;
@@ -17,12 +27,12 @@ public class SpikesManager : MonoBehaviour
     [SerializeField] private GameObject rightParent;
     [SerializeField] private GameObject leftParent;
     [SerializeField] private SIDE side = SIDE.RIGHT;
+    [SerializeField] private DIFICULTY dificulty = DIFICULTY.NONE;
     [SerializeField] private bool activeAnim = false;
     [SerializeField] private float animationTime = 1.0f;
 
     private Vector3 posRightParentStart;
     private Vector3 posLeftParentStart;
-
 
     public void Init(ref System.Action OnTouchWall)
     {
@@ -53,6 +63,7 @@ public class SpikesManager : MonoBehaviour
         for (int i = 0; i < rightSpikes.Length; i++)
         {
             rightSpikes[i].SetActive(false);
+            leftSpikes[i].SetActive(false);
         }
         side = SIDE.LEFT;
         DisableColliderSpikes();
@@ -107,6 +118,10 @@ public class SpikesManager : MonoBehaviour
     }
     void ActiveRandomSpikes()
     {
+        ActiveRandomSpikesBaseDifficulty(side);   
+    }
+    void ActiveRandomSpikesOld()
+    {
         if (rightSpikes.Length == 0 || leftSpikes.Length == 0)
             return;
         bool almosOne = true;
@@ -136,6 +151,77 @@ public class SpikesManager : MonoBehaviour
         }
        
     }
+    void DisabledAllSpikes(SIDE side)
+    {
+        switch (side)
+        {
+            case SIDE.RIGHT:
+                for (int i = 0; i < rightSpikes.Length; i++)
+                    rightSpikes[i].SetActive(false);
+                break;
+            case SIDE.LEFT:
+                for (int i = 0; i < leftSpikes.Length; i++)
+                    leftSpikes[i].SetActive(false);
+                break;
+        }
+    }
+    void ActiveRandomSpikesBaseDifficulty(SIDE side)
+    {
+        if (rightSpikes.Length == 0 || leftSpikes.Length == 0)
+            return;
+        switch (dificulty)
+        {
+            case DIFICULTY.NONE:
+                BaseEnabledDisable(side, 0);
+                break;
+            case DIFICULTY.EASY:
+                BaseEnabledDisable(side, 2);
+                break;
+            case DIFICULTY.MEDIUM:
+                BaseEnabledDisable(side, 5);
+                break;
+            case DIFICULTY.HARD:
+                BaseEnabledDisable(side, 8);
+                break;
+            case DIFICULTY.IMPOSIBLE:
+                BaseEnabledDisable(side, leftSpikes.Length - 2);
+                break;
+            case DIFICULTY.ALLSPIKES:
+                BaseEnabledDisable(side, leftSpikes.Length);
+                break;
+            default:
+                break;
+        }
+    }
+    void BaseEnabledDisable(SIDE side,int cuantity)
+    {
+        switch (side)
+        {
+            case SIDE.RIGHT:
+                for (int i = 0; i < cuantity; i++)
+                {
+                    int a = Random.Range(0, rightSpikes.Length);
+                    if (rightSpikes[a].activeSelf)
+                        i--;
+                    else
+                        rightSpikes[a].SetActive(true);
+                }
+                break;
+            case SIDE.LEFT:
+                for (int i = 0; i < cuantity; i++)
+                {
+                    int a = Random.Range(0, leftSpikes.Length);
+                    if (leftSpikes[a].activeSelf)
+                        i--;
+                    else
+                        leftSpikes[a].SetActive(true);
+                }
+                break;
+            default:
+                Debug.LogError("ERROR CALL");
+                break;
+        }
+    }
 
     IEnumerator move(GameObject go,Vector3 to,float time)
     {
@@ -156,11 +242,15 @@ public class SpikesManager : MonoBehaviour
     IEnumerator Anim(GameObject go, Vector3 to, float time)
     {
         activeAnim = true;
-        while (activeAnim)
+        if (activeAnim)
         {
             StartCoroutine(move(go, to, time));
+        }
+        while (activeAnim)
+        {
             yield return null;
         }
+        DisabledAllSpikes(side);
     }
 
 }

@@ -4080,6 +4080,7 @@ MonoBehaviour:
   rightParent: {fileID: 451591659}
   leftParent: {fileID: 1521028956}
   side: 1
+  dificulty: 2
   activeAnim: 0
   animationTime: 0.1
 --- !u!1 &1121266791
