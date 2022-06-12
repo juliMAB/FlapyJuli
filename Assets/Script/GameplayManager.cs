@@ -14,6 +14,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private SpikesManager spikesManager = null;
     [SerializeField] private Coint coint = null;
     [SerializeField] private SpawnCurrency spawnCurrency = null;
+    [SerializeField] private ProgresionManager progresion = null;
 
     [SerializeField] private System.Action OnTouchWall;
     [SerializeField] private System.Action OnTouchCoint;
@@ -31,6 +32,7 @@ public class GameplayManager : MonoBehaviour
 
     private void Start()
     {
+        progresion.Init(ref OnScoreChange);
         spikesManager.Init(ref OnTouchWall);
         OnTouchCoint += Added1Money;
         coint.Init(ref OnTouchCoint);

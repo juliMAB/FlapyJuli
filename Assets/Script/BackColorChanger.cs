@@ -17,10 +17,6 @@ public class BackColorChanger : MonoBehaviour
 
 
 
-    private void Init(System.Action OnProgress)
-    {
-        OnProgress += this.OnProgress;
-    }
 
     void ChangeColorBack(Color color)
     {
@@ -47,7 +43,7 @@ public class BackColorChanger : MonoBehaviour
         ChangeColorBack(var);
         ChangeColorSides(var);
     }
-    void OnProgress()
+    public void OnProgress()
     {
         switch (t)
         {
@@ -69,7 +65,7 @@ public class BackColorChanger : MonoBehaviour
         Color initColor = go.color;
         float dTime = 0;
         float percent = 0;
-        do
+        while (dTime < time)
         {
             dTime += Time.deltaTime;
             percent = dTime / time;
@@ -77,14 +73,14 @@ public class BackColorChanger : MonoBehaviour
                 percent = 1;
             go.color = Color.Lerp(initColor, to, percent);
             yield return null;
-        } while (dTime < time);
+        } 
     }
     IEnumerator ChangeColor(Image go, Color to, float time)
     {
         Color initColor = go.color;
         float dTime = 0;
         float percent = 0;
-        do
+        while (dTime < time)
         {
             dTime += Time.deltaTime;
             percent = dTime / time;
@@ -92,6 +88,6 @@ public class BackColorChanger : MonoBehaviour
                 percent = 1;
             go.color = Color.Lerp(initColor, to, percent);
             yield return null;
-        } while (dTime < time);
+        }
     }
 }
