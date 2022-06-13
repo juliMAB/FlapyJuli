@@ -118,5 +118,6 @@ public class GameplayManager : MonoBehaviour
         spikesManager.MyReset();
         ResetScore();
         uiManager.MyReset();
+        progresion.MyReset();
     }
 }

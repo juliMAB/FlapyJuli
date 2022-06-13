@@ -304,7 +304,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0464c2d952d07c841a8c3c1c122d3c5c, type: 2}
+  - {fileID: 2100000, guid: 685013bb336cc6c44a485d60785dd51e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1585,7 +1585,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0464c2d952d07c841a8c3c1c122d3c5c, type: 2}
+  - {fileID: 2100000, guid: 685013bb336cc6c44a485d60785dd51e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1731,7 +1731,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0464c2d952d07c841a8c3c1c122d3c5c, type: 2}
+  - {fileID: 2100000, guid: 685013bb336cc6c44a485d60785dd51e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2756,7 +2756,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0464c2d952d07c841a8c3c1c122d3c5c, type: 2}
+  - {fileID: 2100000, guid: 685013bb336cc6c44a485d60785dd51e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4920,12 +4920,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   t: 0
-  background: {fileID: 1145940360}
-  border:
-  - {fileID: 121667547}
-  - {fileID: 574051556}
-  - {fileID: 605452418}
-  - {fileID: 793728600}
+  background: {fileID: 2100000, guid: 0464c2d952d07c841a8c3c1c122d3c5c, type: 2}
+  border: {fileID: 2100000, guid: 685013bb336cc6c44a485d60785dd51e, type: 2}
   numberScore: {fileID: 685172545}
   durationAnim: 1
   colors:
@@ -6479,7 +6475,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 985e5779d918bc540939d1eb68c5c8c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tYPES: 1
+  valuesProgress:
+    values: 0200000005000000070000000a0000000c000000
+  tYPES: 0
   colorChanger: {fileID: 1216686011}
   animationCurve:
     serializedVersion: 2
@@ -6487,25 +6485,25 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 1
-      outSlope: 1
+      inSlope: 0.5
+      outSlope: 0.5
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 10
-      value: 10
-      inSlope: 1.0080737
-      outSlope: 1.0080737
-      tangentMode: 1
+      value: 5
+      inSlope: 0.5
+      outSlope: 0.5
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  actualValue: 1
+  actualValue: 0
 --- !u!4 &1589771928
 Transform:
   m_ObjectHideFlags: 0

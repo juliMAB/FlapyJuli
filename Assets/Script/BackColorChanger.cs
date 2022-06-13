@@ -8,8 +8,8 @@ public class BackColorChanger : MonoBehaviour
 {
     [SerializeField] private enum TYPES {RANDOM,LINEAR }
     [SerializeField] TYPES t;
-    [SerializeField] private Image background;
-    [SerializeField] private SpriteRenderer[] border;
+    [SerializeField] private Material background;
+    [SerializeField] private Material border;
     [SerializeField] private TMPro.TextMeshProUGUI numberScore;
     [SerializeField] private float durationAnim;
     [SerializeField] private Color[] colors;
@@ -24,11 +24,7 @@ public class BackColorChanger : MonoBehaviour
     }
     void ChangeColorSides(Color color)
     {
-        for (int i = 0; i < border.Length; i++)
-        {
-            border[i].color = color;
-            StartCoroutine(ChangeColor(border[i], color, durationAnim));
-        }
+        StartCoroutine(ChangeColor(border, color, durationAnim));
     }
 
     void ChangeColorRandom()
@@ -60,7 +56,7 @@ public class BackColorChanger : MonoBehaviour
     }
 
 
-    IEnumerator ChangeColor(SpriteRenderer go, Color to, float time)
+    IEnumerator ChangeColor(Material go, Color to, float time)
     {
         Color initColor = go.color;
         float dTime = 0;
@@ -74,20 +70,5 @@ public class BackColorChanger : MonoBehaviour
             go.color = Color.Lerp(initColor, to, percent);
             yield return null;
         } 
-    }
-    IEnumerator ChangeColor(Image go, Color to, float time)
-    {
-        Color initColor = go.color;
-        float dTime = 0;
-        float percent = 0;
-        while (dTime < time)
-        {
-            dTime += Time.deltaTime;
-            percent = dTime / time;
-            if (dTime >= time)
-                percent = 1;
-            go.color = Color.Lerp(initColor, to, percent);
-            yield return null;
-        }
     }
 }

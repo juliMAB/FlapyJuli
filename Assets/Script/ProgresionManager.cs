@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class ProgresionManager : MonoBehaviour
 {
-    [SerializeField]
-    class ValuesProgress
+    [System.Serializable]
+    public class ValuesProgress
     {
-        float[] values;
+        [SerializeField] public int[] values;
     }
+    [SerializeField] ValuesProgress valuesProgress = new ValuesProgress();
     [SerializeField] private enum TYPES {VALUE,CURVE}
     [SerializeField] TYPES tYPES = TYPES.CURVE;
     [SerializeField] BackColorChanger colorChanger = null;
     [SerializeField] AnimationCurve animationCurve = new AnimationCurve();
-    [SerializeField] float actualValue = 1;
+    [SerializeField] int actualValue = 1;
 
     public void Init(ref System.Action<int> OnScore)
     {
@@ -21,7 +22,32 @@ public class ProgresionManager : MonoBehaviour
     }
     private void OnProgress(int score)
     {
-     
+
+        switch (tYPES)
+        {
+            case TYPES.VALUE:
+                UpdateBaseValue(score);
+                break;
+            case TYPES.CURVE:
+                UpdateCurve(score);
+                break;
+            default:
+                break;
+        }
+        
+    }
+    void UpdateBaseValue(int score)
+    {
+        if (valuesProgress.values.Length == 0|| actualValue >= valuesProgress.values.Length)
+            return;
+        if (score >= valuesProgress.values[actualValue])
+        {
+            actualValue++;
+            colorChanger.OnProgress();
+        }
+    }
+    void UpdateCurve(int score)
+    {
         float a = animationCurve.Evaluate(score);
         int z = (int)a;
         if (actualValue != z)
@@ -29,5 +55,10 @@ public class ProgresionManager : MonoBehaviour
             actualValue = z;
             colorChanger.OnProgress();
         }
+    }
+
+    public void MyReset()
+    {
+        actualValue = 0;
     }
 }
