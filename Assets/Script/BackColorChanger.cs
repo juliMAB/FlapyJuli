@@ -29,9 +29,11 @@ public class BackColorChanger : MonoBehaviour
 
     void ChangeColorRandom()
     {
-        Color var = colors[Random.Range(0, colors.Length)];
-        ChangeColorBack(var);
-        ChangeColorSides(var);
+        Color var1 = colors[Random.Range(0, colors.Length)];
+        Color var2 = colors[Random.Range(0, colors.Length)];
+
+        ChangeColorBack(var1);
+        ChangeColorSides(var2);
     }
     void CnahgeColorLinear()
     {

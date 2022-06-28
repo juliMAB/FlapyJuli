@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour
     private void UpdateCurrency(int currency)
     {
         if (m_TextMeshPro_Currency != null)
-            m_TextMeshPro_Currency.text = currency.ToString();
+            m_TextMeshPro_Currency.text = "Moneditas: "+ currency.ToString();
     }
     private void UpdateMaxScore(int value)
     {
