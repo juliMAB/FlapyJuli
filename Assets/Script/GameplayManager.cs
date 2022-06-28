@@ -19,11 +19,11 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private System.Action OnTouchWall;
     [SerializeField] private System.Action OnTouchCoint;
     [SerializeField] private System.Action OnpjDie;
+    [SerializeField] private System.Action OnProgress;
     [SerializeField] private System.Action<int> OnScoreChange;
     [SerializeField] private System.Action<int> OnMoneyChange;
     [SerializeField] private System.Action<int> OnMaxScoreChange;
     [SerializeField] private System.Action<int> OnGamePlayedChange;
-
     private Vector3 pjPos;
 
     public static int Money { get => money; set => money = value; }
@@ -32,8 +32,8 @@ public class GameplayManager : MonoBehaviour
 
     private void Start()
     {
-        progresion.Init(ref OnScoreChange);
-        spikesManager.Init(ref OnTouchWall);
+        spikesManager.Init(ref OnTouchWall, ref OnProgress);
+        progresion.Init(ref OnScoreChange, ref OnProgress);
         OnTouchCoint += Added1Money;
         coint.Init(ref OnTouchCoint);
         OnTouchWall += Added1Score;

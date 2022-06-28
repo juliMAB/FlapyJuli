@@ -34,10 +34,10 @@ public class SpikesManager : MonoBehaviour
     private Vector3 posRightParentStart;
     private Vector3 posLeftParentStart;
 
-    public void Init(ref System.Action OnTouchWall)
+    public void Init(ref System.Action OnTouchWall,ref System.Action OnUpdateDifficulty)
     {
         OnTouchWall += ActiveSpikes;
-        
+        OnUpdateDifficulty+= UpdateDificulty;
     }
     private void Start()
     {
@@ -66,6 +66,7 @@ public class SpikesManager : MonoBehaviour
             leftSpikes[i].SetActive(false);
         }
         side = SIDE.LEFT;
+        dificulty = DIFICULTY.NONE;
         DisableColliderSpikes();
     }
 
@@ -192,6 +193,11 @@ public class SpikesManager : MonoBehaviour
             default:
                 break;
         }
+    }
+    void UpdateDificulty()
+    {
+        if (dificulty != DIFICULTY.IMPOSIBLE)
+            dificulty++;
     }
     void BaseEnabledDisable(SIDE side,int cuantity)
     {

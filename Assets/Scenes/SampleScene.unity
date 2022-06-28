@@ -3302,7 +3302,7 @@ MonoBehaviour:
   rightParent: {fileID: 451591659}
   leftParent: {fileID: 1521028956}
   side: 1
-  dificulty: 2
+  dificulty: 0
   activeAnim: 0
   animationTime: 0.1
 --- !u!1 &1121266791
@@ -5854,7 +5854,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

@@ -15,10 +15,12 @@ public class ProgresionManager : MonoBehaviour
     [SerializeField] BackColorChanger colorChanger = null;
     [SerializeField] AnimationCurve animationCurve = new AnimationCurve();
     [SerializeField] int actualValue = 1;
+    System.Action OnChangeDificulty;
 
-    public void Init(ref System.Action<int> OnScore)
+    public void Init(ref System.Action<int> OnScore, ref System.Action OnchangeDificulty)
     {
         OnScore += OnProgress;
+        this.OnChangeDificulty = OnchangeDificulty;
     }
     private void OnProgress(int score)
     {
@@ -44,6 +46,7 @@ public class ProgresionManager : MonoBehaviour
         {
             actualValue++;
             colorChanger.OnProgress();
+            OnChangeDificulty?.Invoke();
         }
     }
     void UpdateCurve(int score)
@@ -54,6 +57,7 @@ public class ProgresionManager : MonoBehaviour
         {
             actualValue = z;
             colorChanger.OnProgress();
+            OnChangeDificulty.Invoke();
         }
     }
 
