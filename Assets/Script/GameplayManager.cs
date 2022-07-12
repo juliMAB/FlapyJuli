@@ -15,8 +15,10 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private Coint coint = null;
     [SerializeField] private SpawnCurrency spawnCurrency = null;
     [SerializeField] private ProgresionManager progresion = null;
+    [SerializeField] private Market market = null;
 
     [SerializeField] private System.Action OnTouchWall;
+    [SerializeField] private System.Action OnBuy;
     [SerializeField] private System.Action OnTouchCoint;
     [SerializeField] private System.Action OnpjDie;
     [SerializeField] private System.Action OnProgress;
@@ -42,8 +44,16 @@ public class GameplayManager : MonoBehaviour
         OnpjDie += DisableBird;
         uiManager.Init(ref OnScoreChange,ref OnpjDie,ref OnMoneyChange, ref OnMaxScoreChange,ref OnGamePlayedChange);
         fb.Init(ref OnTouchWall,ref OnpjDie, UpdatePjPos);
+        OnBuy += MarketBuy;
         LoadCurrency();
+        market.Init(ref OnBuy);
     }
+    void MarketBuy()
+    {
+        OnMoneyChange?.Invoke(money);
+        SaveCurrency();
+    }
+
     void UpdatePjPos(Vector3 pos)
     {
         pjPos = pos;
@@ -98,6 +108,12 @@ public class GameplayManager : MonoBehaviour
         money = data.Currency;
         gamesPlayed = data.GamesPlayed;
         maxScore = data.MaxScore;
+        Market.Acquired[0] = data.acquired1 ;
+        Market.Acquired[1] = data.acquired2 ;
+        Market.Acquired[2] = data.acquired3 ;
+        Market.Acquired[3] = data.acquired4 ;
+        Market.SelectedSkin = data.selectedSkin;
+        OnBuy?.Invoke();
         OnMoneyChange?.Invoke(money);
         OnMaxScoreChange?.Invoke(maxScore);
         OnGamePlayedChange?.Invoke(gamesPlayed);
@@ -107,7 +123,12 @@ public class GameplayManager : MonoBehaviour
         money = 0;
         gamesPlayed = 0;
         maxScore = 0;
-
+        for (int i = 0; i < 4; i++)
+        {
+            Market.Acquired[i] = false;
+            market.AcquiredGO[i].SetActive(true);
+        }
+        Market.SelectedSkin = 0;
         SaveSystem.SaveData();
     }
     public void MyReset()
@@ -119,5 +140,17 @@ public class GameplayManager : MonoBehaviour
         ResetScore();
         uiManager.MyReset();
         progresion.MyReset();
+    }
+    public void Add10Coint()
+    {
+        money += 10;
+        OnBuy?.Invoke();
+        OnMoneyChange?.Invoke(money);
+    }
+    public void OnCallMarketButton(int v)
+    {
+        market.OnCallButton(v, ref money);
+        OnMoneyChange?.Invoke(money);
+        SaveCurrency();
     }
 }
